@@ -50,9 +50,9 @@ class Crawler(object):
         self.danmu_id_list = []
         for page_link in self.page_link_list:
             time.sleep(0.1)
-            print("正在获取来自页面%s的数据" % page_link)
+            print("正在获取来自页面%s的数据" % 'http:'+page_link)
             try:
-                response = requests.get(url=page_link, headers=self.page_headers)
+                response = requests.get(url='http:'+page_link, headers=self.page_headers)
                 data = response.content.decode("utf-8")
                 video_data = re.findall(r'"videoData":(.*?),"rights":', data, re.DOTALL)
                 self.video_data_list.append(video_data[0] + '}')
