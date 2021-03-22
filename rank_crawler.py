@@ -160,7 +160,7 @@ class Crawler(object):
     def __danmu_crawler_all(self,i,j):
         self.g_lock.acquire()
         self.i,self.j = i,j
-        self.path = r'E:\数据\弹幕'
+        self.path = r'弹幕'
         self.folder = os.path.exists(self.path)
         if not self.folder:  # 判断是否存在文件夹如果不存在则创建为文件夹
             os.makedirs(self.path)
@@ -168,7 +168,7 @@ class Crawler(object):
         for video_data in self.new_video_data_list[self.i:self.j]:
             since_time = str(video_data["发布日期"])
             now_time = str(time.strftime('%Y-%m-%d',time.gmtime(time.time())))  #通过当前时间的时间戳获取当前时间的时间格式
-            path = r'E:\数据\弹幕\视频{}'.format(video_data["BV号"])
+            path = r'弹幕\视频{}'.format(video_data["BV号"])
             today_add_1 = since_time
             url_first = self.danmu_url + self.danmu_id_list[id_index] + '&date='    #初步处理的url
             print("正在下载视频{}的弹幕".format(video_data["BV号"]))
@@ -201,7 +201,7 @@ class Crawler(object):
         id_index = 0
         for video_data in self.new_video_data_list[self.i:self.j]:
             now_time = str(time.strftime('%Y-%m-%d', time.gmtime(time.time())))  # 通过当前时间的时间戳获取当前时间的时间格式
-            path = r'E:\数据\弹幕\视频{}的弹幕.txt'.format(video_data["BV号"])
+            path = r'弹幕\视频{}的弹幕.txt'.format(video_data["BV号"])
             url = self.danmu_url + self.danmu_id_list[id_index] + '&date=' + now_time
             print("正在下载视频{}的弹幕".format(video_data["BV号"]))
             resp = requests.get(url=url, headers=self.page_headers).content.decode("utf-8")
