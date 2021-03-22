@@ -86,7 +86,6 @@ class Crawler(object):
                '''
     def __detail_analytical(self):
         self.new_video_data_list = []
-        self.new_up_data_list = []
         for video_data in self.video_dic_list:
             temp_dic_video = {
                 "BV号": video_data['bvid'],
@@ -101,16 +100,6 @@ class Crawler(object):
                 "视频集数":video_data['videos']
             }
             self.new_video_data_list.append(temp_dic_video)
-        for up_data in self.up_dic_list:
-            temp_dic_up = {
-                "UP主":up_data["name"],
-                "性别":up_data["sex"],
-                "UP主id":up_data["mid"],
-                "粉丝数量":up_data["fans"],
-                "ta的关注数":up_data["attention"],
-                "个人说明":up_data["sign"]
-            }
-            self.new_up_data_list.append(temp_dic_up)
         '''
         对元素为字典的列表中的数据做细节分析，并存放到新的列表中
         '''
@@ -141,15 +130,6 @@ class Crawler(object):
         self.worksheet1 = self.workbook.add_sheet('sheet1')  #创建工作表
         i = 0
         for dic in self.new_video_data_list:
-            j = 0
-            for key in dic:
-                self.worksheet1.write(i, j, key)
-                j += 1
-                self.worksheet1.write(i, j, dic[key])
-                j += 1
-            i += 2
-        i = 1
-        for dic in self.new_up_data_list:
             j = 0
             for key in dic:
                 self.worksheet1.write(i, j, key)
