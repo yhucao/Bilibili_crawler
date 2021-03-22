@@ -136,7 +136,7 @@ class Crawler(object):
                 j += 1
                 self.worksheet1.write(i, j, dic[key])
                 j += 1
-            i += 2
+            i += 1
         self.workbook.save(r'B站视频排行.xls')
 
         '''
