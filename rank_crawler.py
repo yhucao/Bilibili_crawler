@@ -50,7 +50,6 @@ class Crawler(object):
         self.danmu_id_list = []
         for page_link in self.page_link_list:
             time.sleep(0.1)
-            print("正在获取来自页面%s的数据" % 'http:'+page_link)
             try:
                 response = requests.get(url='http:'+page_link, headers=self.page_headers)
                 data = response.content.decode("utf-8")
@@ -109,7 +108,6 @@ class Crawler(object):
         for dic in self.new_video_data_list:
             aid = dic["aid"]
             intact_url = self.base_url + str(aid)
-            print("正在获取视频{}的详细信息".format(dic["BV号"]))
             time.sleep(0.1)
             resp = requests.get(url=intact_url, headers=self.headers).content.decode("utf-8")
             data_dic = json.loads(resp)
