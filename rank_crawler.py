@@ -14,7 +14,7 @@ class Crawler(object):
         config_fp.close()
         self.rank_url = self.config_data["page"]["全站榜"]["三日榜"] #参照配置文件进行选择
         self.base_url = "https://api.bilibili.com/archive_stat/stat?aid="   #视频详细信息的接口
-        self.danmu_url = 'https://api.bilibili.com/x/v2/dm/history?type=1&oid='   #弹幕的接口
+        # self.danmu_url = 'https://api.bilibili.com/x/v2/dm/history?type=1&oid='   #弹幕的接口
         self.headers = {
             "User-Agent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.116 Mobile Safari/537.36",
             "Referer": "https://www.bilibili.com/"
@@ -156,6 +156,7 @@ class Crawler(object):
             self.new_video_data_list[index] = dictMerged
             index += 1
 
+'''
     def __danmu_crawler_all(self,i,j):
         self.g_lock.acquire()
         self.i,self.j = i,j
@@ -236,6 +237,7 @@ class Crawler(object):
     '''
     封面图片的下载
     '''
+'''
     def __save_as_excel(self):
         self.workbook = xlwt.Workbook(encoding='utf-8')
         self.worksheet1 = self.workbook.add_sheet('sheet1')  #创建工作表
@@ -262,6 +264,7 @@ class Crawler(object):
         '''
         将数据保存为excel表格
         '''
+'''
     def __save_to_mongodb(self):
         import pymongo #导入模块
         HOST = self.config_data["host"]
@@ -272,7 +275,7 @@ class Crawler(object):
         self.collection2 = self.db["up_data"]
         self.collection1.insert_many(self.new_video_data_list)  #插入文档
         self.collection2.insert_many(self.new_up_data_list)
-
+'''
 if __name__ == '__main__':
     print("开始启动爬虫")
     spider = Crawler()
