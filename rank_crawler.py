@@ -12,7 +12,7 @@ class Crawler(object):
         config_fp = open("./config.json", "r", encoding="utf-8")  #读取配置文件
         self.config_data = json.load(config_fp)
         config_fp.close()
-        self.rank_url = self.config_data["page"]["全站榜"]["三日榜"] #参照配置文件进行选择
+        self.rank_url = self.config_data["page"] #参照配置文件进行选择
         self.base_url = "https://api.bilibili.com/archive_stat/stat?aid="   #视频详细信息的接口
         # self.danmu_url = 'https://api.bilibili.com/x/v2/dm/history?type=1&oid='   #弹幕的接口
         self.headers = {
