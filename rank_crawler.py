@@ -156,88 +156,6 @@ class Crawler(object):
             self.new_video_data_list[index] = dictMerged
             index += 1
 
-'''
-    def __danmu_crawler_all(self,i,j):
-        self.g_lock.acquire()
-        self.i,self.j = i,j
-        self.path = r'弹幕'
-        self.folder = os.path.exists(self.path)
-        if not self.folder:  # 判断是否存在文件夹如果不存在则创建为文件夹
-            os.makedirs(self.path)
-        id_index = 0
-        for video_data in self.new_video_data_list[self.i:self.j]:
-            since_time = str(video_data["发布日期"])
-            now_time = str(time.strftime('%Y-%m-%d',time.gmtime(time.time())))  #通过当前时间的时间戳获取当前时间的时间格式
-            path = r'弹幕\视频{}'.format(video_data["BV号"])
-            today_add_1 = since_time
-            url_first = self.danmu_url + self.danmu_id_list[id_index] + '&date='    #初步处理的url
-            print("正在下载视频{}的弹幕".format(video_data["BV号"]))
-            while today_add_1 < now_time:
-                new_path = path + (str(today_add_1)+"时的弹幕.txt")     #设置文件名
-                resp = requests.get(url=url_first+today_add_1,headers=self.page_headers).content.decode("utf-8")
-                with open(new_path,'w',encoding='utf-8') as fp:
-                    print("正在下载%{}并对其作出处理".format(new_path))
-                    ls = re.findall(r"<d p=.*?>(.*?)</d>", resp, re.DOTALL)     #对爬取的xml文件做进一步处理以获取纯弹幕
-                    data = str(ls)
-                    fp.write(data)
-                    fp.write("\n日期为：")
-                    fp.write(str(today_add_1))
-                today_add_1 = (datetime.datetime.strptime(today_add_1,"%Y-%m-%d") + datetime.timedelta(days=1)).strftime("%Y-%m-%d") #增加一天
-                time.sleep(1) #设置延迟，可尽量调大写，过小太容易被禁止访问，禁止后更换只要更换配置文件中的cookie即可
-            id_index +=1
-
-        self.g_lock.release()
-        '''
-        爬取自发布日期起的弹幕并储存文件
-        '''
-
-    def __danmu_crawler_oneday(self, i, j):
-        self.g_lock.acquire()
-        self.i, self.j = i, j
-        self.path = r'弹幕'
-        self.folder = os.path.exists(self.path)
-        if not self.folder:  # 判断是否存在文件夹如果不存在则创建为文件夹
-            os.makedirs(self.path)
-        id_index = 0
-        for video_data in self.new_video_data_list[self.i:self.j]:
-            now_time = str(time.strftime('%Y-%m-%d', time.gmtime(time.time())))  # 通过当前时间的时间戳获取当前时间的时间格式
-            path = r'弹幕\视频{}的弹幕.txt'.format(video_data["BV号"])
-            url = self.danmu_url + self.danmu_id_list[id_index] + '&date=' + now_time
-            print("正在下载视频{}的弹幕".format(video_data["BV号"]))
-            resp = requests.get(url=url, headers=self.page_headers).content.decode("utf-8")
-            with open(path, 'w', encoding='utf-8') as fp:
-                print("正在对{}作出处理".format(path))
-                ls = re.findall(r"<d p=.*?>(.*?)</d>", resp, re.DOTALL)  # 对爬取的xml文件做进一步处理以获取纯弹幕
-                data = str(ls)
-                fp.write(data)
-                fp.write("\n日期为：")
-                fp.write(str(now_time))
-            id_index += 1
-        time.sleep(2)
-        self.g_lock.release()
-
-        '''
-                爬取今日弹幕并储存文件
-                '''
-
-    def __download_picture(self):
-        self.g_lock.acquire()
-        self.path = r'封面图片'
-        self.folder = os.path.exists(self.path)
-        if not self.folder:            # 判断是否存在文件夹如果不存在则创建为文件夹
-            os.makedirs(self.path)
-        for dic in self.new_video_data_list:
-            print("正在下载封面{}.jpg".format(dic["BV号"]))
-            pic = requests.get(url=dic['封面图片地址'],headers=self.headers).content
-            with open(r"封面图片\{}.jpg".format(dic["BV号"]),"wb") as fp:
-                fp.write(pic)
-                fp.close()
-            time.sleep(0.1)         #设置延迟以防被禁
-        self.g_lock.release()
-    '''
-    封面图片的下载
-    '''
-'''
     def __save_as_excel(self):
         self.workbook = xlwt.Workbook(encoding='utf-8')
         self.worksheet1 = self.workbook.add_sheet('sheet1')  #创建工作表
@@ -264,18 +182,7 @@ class Crawler(object):
         '''
         将数据保存为excel表格
         '''
-'''
-    def __save_to_mongodb(self):
-        import pymongo #导入模块
-        HOST = self.config_data["host"]
-        PORT = self.config_data["port"]
-        self.client = pymongo.MongoClient(host=HOST, port=PORT) #创建client对象
-        self.db = self.client["B站"]     #创建数据库对象
-        self.collection1 = self.db["video_data"]        #创建集合
-        self.collection2 = self.db["up_data"]
-        self.collection1.insert_many(self.new_video_data_list)  #插入文档
-        self.collection2.insert_many(self.new_up_data_list)
-'''
+
 if __name__ == '__main__':
     print("开始启动爬虫")
     spider = Crawler()
