@@ -33,34 +33,14 @@ class Crawler(object):
         self.__analytical_data()
         self.__detail_analytical()
         self.__video_detail_get()
-        self.__multi_threading()
+        # self.__multi_threading()
         self.__save_as_excel()
         if self.config_data["mongodb"]:
             self.__save_to_mongodb()
         '''
         给出相关的网址链接和伪造请求头,读取配置信息，并执行一些函数
         '''
-
-
-    def __multi_threading(self):
-        self.g_lock = threading.Lock()
-        th1 = threading.Thread(target=self.__download_picture)
-        th2 = threading.Thread(target=self.__danmu_crawler_oneday, args=(0,20))
-        th3 = threading.Thread(target=self.__danmu_crawler_oneday, args=(20,40))
-        th4 = threading.Thread(target=self.__danmu_crawler_oneday, args=(40,60))
-        th5 = threading.Thread(target=self.__danmu_crawler_oneday, args=(60,80))
-        th6 = threading.Thread(target=self.__danmu_crawler_oneday, args=(80,101))
-        th1.start()
-        th2.start()
-        th3.start()
-        th4.start()
-        th5.start()
-        th6.start()
-    '''
-     启用多线程爬虫,这里的弹幕爬虫只爬取单日的，多日爬虫真的太容易被禁止访问了
-     在整个进程中给弹幕的爬取设置五个线程
-    '''
-
+        
     def __get_data_from_internet(self):
         self.resp = requests.get(self.rank_url, headers=self.headers)
         self.text = self.resp.content.decode('utf-8')
