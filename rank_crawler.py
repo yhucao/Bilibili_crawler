@@ -194,7 +194,7 @@ class Crawler(object):
     def __danmu_crawler_oneday(self, i, j):
         self.g_lock.acquire()
         self.i, self.j = i, j
-        self.path = r'E:\数据\弹幕'
+        self.path = r'弹幕'
         self.folder = os.path.exists(self.path)
         if not self.folder:  # 判断是否存在文件夹如果不存在则创建为文件夹
             os.makedirs(self.path)
@@ -222,14 +222,14 @@ class Crawler(object):
 
     def __download_picture(self):
         self.g_lock.acquire()
-        self.path = r'E:\数据\封面图片'
+        self.path = r'封面图片'
         self.folder = os.path.exists(self.path)
         if not self.folder:            # 判断是否存在文件夹如果不存在则创建为文件夹
             os.makedirs(self.path)
         for dic in self.new_video_data_list:
             print("正在下载封面{}.jpg".format(dic["BV号"]))
             pic = requests.get(url=dic['封面图片地址'],headers=self.headers).content
-            with open(r"E:\数据\封面图片\{}.jpg".format(dic["BV号"]),"wb") as fp:
+            with open(r"封面图片\{}.jpg".format(dic["BV号"]),"wb") as fp:
                 fp.write(pic)
                 fp.close()
             time.sleep(0.1)         #设置延迟以防被禁
@@ -259,7 +259,7 @@ class Crawler(object):
                 self.worksheet1.write(i, j, dic[key])
                 j += 1
             i += 2
-        self.workbook.save(r'E:\数据\B站视频排行.xls')
+        self.workbook.save(r'B站视频排行.xls')
 
         '''
         将数据保存为excel表格
